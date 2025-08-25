@@ -43,7 +43,6 @@ function getSignature(url, body, headers, secretKey) {
     // We are passing the extra key values pairs before serializing our request body
     message['X-NONCE'] = headers['X-NONCE'];
     message['X-RECV-WINDOW'] = headers['X-RECV-WINDOW'];
-    message['X-REQUEST-URL'] = url;
 
     const messageSorted = sortObjectAlphabetically(message);
 
