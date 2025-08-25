@@ -46,12 +46,6 @@ function getSignature(url, params, headers, secretKey) {
     message['X-NONCE'] = headers['X-NONCE'];
     message['X-RECV-WINDOW'] = headers['X-RECV-WINDOW'];
 
-    if (Object.keys(params).length === 0)
-        message['X-REQUEST-URL'] = url;
-
-    else
-        message['X-REQUEST-URL'] = `${url}?${qs.stringify(params)}`;
-
     const messageSorted = sortObjectAlphabetically(message);
 
     console.log('messageSorted', messageSorted);
