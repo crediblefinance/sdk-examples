@@ -25,9 +25,11 @@ function getHeaders(apiKey) {
     return headers;
 }
 
+// will sort the object keys in alphabetical order
+// all the values are converted to string
 function sortObjectAlphabetically(obj) {
     const messageSorted = Object.keys(obj).sort().reduce((acc, key) => {
-        acc[key] = obj[key];
+        acc[key] = obj[key].toString();
 
         return acc;
     }, {});
