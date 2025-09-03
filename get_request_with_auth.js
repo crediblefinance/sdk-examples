@@ -28,14 +28,17 @@ function getHeaders(apiKey) {
 
 // will sort the object keys in alphabetical order
 // all the values are converted to string
-function sortObjectAlphabetically(obj) {
-    const messageSorted = Object.keys(obj).sort().reduce((acc, key) => {
-        acc[key] = obj[key].toString();
+function sortObjectKeys(obj) {
+    if (obj === null || typeof obj !== 'object' || Array.isArray(obj)) 
+        return obj; // return as-is if not a plain object
 
-        return acc;
-    }, {});
+    return Object.keys(obj)
+        .sort()
+        .reduce((acc, key) => {
+            acc[key] = sortObjectKeys(obj[key]); // recurse if nested object
 
-    return messageSorted;
+            return acc;
+        }, {});
 }
 
 // Helper function to generate signature for the request
@@ -47,7 +50,7 @@ function getSignature(url, params, headers, secretKey) {
     message['X-NONCE'] = headers['X-NONCE'];
     message['X-RECV-WINDOW'] = headers['X-RECV-WINDOW'];
 
-    const messageSorted = sortObjectAlphabetically(message);
+    const messageSorted = sortObjectKeys(message);
 
     console.log('messageSorted', messageSorted);
 
