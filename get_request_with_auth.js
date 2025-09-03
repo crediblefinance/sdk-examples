@@ -29,13 +29,16 @@ function getHeaders(apiKey) {
 // will sort the object keys in alphabetical order
 // all the values are converted to string
 function sortObjectKeys(obj) {
-    if (obj === null || typeof obj !== 'object' || Array.isArray(obj)) 
-        return obj; // return as-is if not a plain object
+    if (obj === null) 
+        return null; // preserve null
+
+    if (typeof obj !== 'object' || Array.isArray(obj)) 
+        return obj !== undefined ? obj.toString() : String(obj);
 
     return Object.keys(obj)
         .sort()
         .reduce((acc, key) => {
-            acc[key] = sortObjectKeys(obj[key]); // recurse if nested object
+            acc[key] = sortObjectKeys(obj[key]); // recurse
 
             return acc;
         }, {});
